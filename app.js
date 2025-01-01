@@ -13,12 +13,6 @@ app.get("/about",(req,res)=>{
     })
 })
 
-app.get("/about",(req,res)=>{
-    res.json({
-        message:"This is about page of the server!!!",
-    })
-})
-
 
 app.listen(3000,()=>{
     console.log("Node.Js project has been started!!!");
