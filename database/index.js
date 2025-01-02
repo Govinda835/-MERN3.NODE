@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 async function connectToDatabase()
 {
-    const connectionStatus= await mongoose.connect("mongodb+srv://govinda835:helloworld@cluster0.czl5j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+    const connectionStatus= await mongoose.connect(process.env.MONGODB_URL)
 try {
     if(connectionStatus)
     {
