@@ -33,6 +33,13 @@ app.post("/blog",async (req,res)=>{
     // const description = req.body.description
     // const image = req.body.image
     const {title, subtitle, description, image} = req.body
+    if(!title)
+    {
+        return res.status(400).json({
+            message : "please enter the title...."
+        })
+    }
+
     await Blog.create({
         title : title,
         subtitle : subtitle,

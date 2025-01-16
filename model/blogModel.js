@@ -4,7 +4,7 @@ const blogSchema = new mongoose.Schema({
     title : {
         type : String,
         require : true,
-        // unique : true
+        unique : true
     },
     subtitle : {
         type : String,
