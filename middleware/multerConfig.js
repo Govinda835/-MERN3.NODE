@@ -5,7 +5,7 @@ const storage = multer.diskStorage({
         cb(null,"./storage") // (error ," destination")
     },
     filename: function(req,file,cb){
-        cb(null, Date.now()+ file.originalname)
+        cb(null, "" + file.originalname)
     }
 })
 
@@ -13,3 +13,5 @@ module.exports ={
     multer,
     storage
 }
+
+//Date.now()

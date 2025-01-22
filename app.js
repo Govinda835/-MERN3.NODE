@@ -24,13 +24,45 @@ app.get("/about",(req,res)=>{
 })
 
 
-app.post("/blog",upload.single("image"),(req,res)=>{
+app.post("/blog",upload.single("image"),async (req,res)=>{
 
     console.log(req.body)
+    const {title, subtitle, description,} = req.body
+    const filename = req.file.filename
+    if(!title || !subtitle || !description)
+    {
+        return res.status(400).json({
+            message : "please provide title, subtitle, description...."
+        })
+    }
+    await Blog.create({
+        title : title,
+        subtitle : subtitle,
+        description : description,
+        image : filename
+    })
+    //console.log(req.file)
 
     res.status(200).json({
         message : "blog api hit successfully...."
     })
+})
+
+app.get("/blog", async (req,res)=>{
+    const blogs = await  Blog.find() // always gives data in the form of array 
+
+    res.status(200).json({
+        message : "api fetched successfully...",
+        datas : blogs
+    })
+})
+app.use(express.static("./storage"))
+
+
+app.listen(process.env.PORT,()=>{
+    console.log("Node.Js project has been started!!!");
+})
+
 
     //  console.log(req.body)
 
@@ -60,12 +92,5 @@ app.post("/blog",upload.single("image"),(req,res)=>{
     //     image : image,
 
     // })
-
-})
-
-
-app.listen(process.env.PORT,()=>{
-    console.log("Node.Js project has been started!!!");
-})
 
  
