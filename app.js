@@ -7,6 +7,8 @@ const app = express()
 connectToDatabase()
 
 app.use(express.json())
+const {multer, storage} = require("./middleware/multerConfig")
+const upload = multer({storage : storage})
 
 
 app.get("/home",(req,res)=>{
@@ -15,16 +17,20 @@ app.get("/home",(req,res)=>{
     })
 })
 
-app.get("/about", (req,res)=>{
+app.get("/about",(req,res)=>{
     res.status(200).json({
         message: "This is about page!!!",
     })
 })
 
 
-app.post("/blog",async (req,res)=>{
+app.post("/blog",upload.single("image"),(req,res)=>{
 
-    
+    console.log(req.body)
+
+    res.status(200).json({
+        message : "blog api hit successfully...."
+    })
 
     //  console.log(req.body)
 
@@ -32,29 +38,30 @@ app.post("/blog",async (req,res)=>{
     // const subtitle = req.body.subtile
     // const description = req.body.description
     // const image = req.body.image
-    const {title, subtitle, description, image} = req.body
-    if(!title)
-    {
-        return res.status(400).json({
-            message : "please enter the title...."
-        })
-    }
 
-    await Blog.create({
-        title : title,
-        subtitle : subtitle,
-        description : description,
-        image : image,
+    //const {title, subtitle, description, image} = req.body
+    // if(!title)
+    // {
+    //     return res.status(400).json({
+    //         message : "please enter the title...."
+    //     })
+    // }
+    // if(!subtitle)
+    // {
+    //     res.status(400).json({
+    //         message : "please enter the subtitle...."
+    //     })
+    // }
 
-    })
+    // await Blog.create({
+    //     title : title,
+    //     subtitle : subtitle,
+    //     description : description,
+    //     image : image,
 
+    // })
 
-
-    res.status(200).json({
-        message : "blog api hit successfully...."
-    })
 })
-
 
 
 app.listen(process.env.PORT,()=>{
