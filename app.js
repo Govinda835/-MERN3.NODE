@@ -59,6 +59,31 @@ app.get("/blog", async (req,res)=>{
 app.use(express.static("./storage"))
 
 
+app.get("/blog/:id", async (req,res)=>{
+    const id = req.params.id
+    const blog = await Blog.findById(id)
+    if(!blog)
+    {
+         res.status(404).json({
+            message : "data not found....."
+        })
+    }
+    else
+    {res.status(200).json({
+    message : "Blog api fetched successfully... ",
+    data : blog
+    })}
+})
+
+app.delete("/blog/:id", async (req,res)=>{
+   const id = req.params.id
+   await Blog.findByIdAndDelete(id)
+   res.status(200).json({
+    message : "blog deleted successfully...."
+   })
+})
+
+
 app.listen(process.env.PORT,()=>{
     console.log("Node.Js project has been started!!!");
 })
