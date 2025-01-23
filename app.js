@@ -4,6 +4,9 @@ const { connectToDatabase } = require("./database")
 const { Blog } = require("./model/blogModel")
 
 const app = express()
+
+const fs = require("fs")
+
 connectToDatabase()
 
 app.use(express.json())
@@ -69,14 +72,29 @@ app.get("/blog/:id", async (req,res)=>{
         })
     }
     else
-    {res.status(200).json({
+    {
+    res.status(200).json({
     message : "Blog api fetched successfully.... ",
     data : blog
-    })}
+    })
+    }
 })
 
 app.delete("/blog/:id", async (req,res)=>{
    const id = req.params.id
+   const blog = await Blog.findById(id)
+   const imageName = blog.image
+   fs.unlink("storage/"+ imageName,(err)=>{
+    if(err){
+        console.log("fail not deleted...")
+    }
+    else 
+    {
+        console.log("image deleted sucessfully.... ")
+    }
+   })
+    
+
    await Blog.findByIdAndDelete(id)
    res.status(200).json({
     message : "blog deleted successfully....."
