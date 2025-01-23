@@ -70,7 +70,7 @@ app.get("/blog/:id", async (req,res)=>{
     }
     else
     {res.status(200).json({
-    message : "Blog api fetched successfully... ",
+    message : "Blog api fetched successfully.... ",
     data : blog
     })}
 })
@@ -79,7 +79,7 @@ app.delete("/blog/:id", async (req,res)=>{
    const id = req.params.id
    await Blog.findByIdAndDelete(id)
    res.status(200).json({
-    message : "blog deleted successfully...."
+    message : "blog deleted successfully....."
    })
 })
 
