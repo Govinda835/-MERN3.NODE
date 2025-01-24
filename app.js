@@ -11,6 +11,7 @@ connectToDatabase()
 
 app.use(express.json())
 const {multer, storage} = require("./middleware/multerConfig")
+const { title } = require("process")
 const upload = multer({storage : storage})
 
 
@@ -101,10 +102,45 @@ app.delete("/blog/:id", async (req,res)=>{
    })
 })
 
+app.patch("/blog/:id", upload.single("image"), async (req,res)=>{
+    const id = req.params.id
+    const {title, subtitle, description} = req.body
+    let imageName
+    if(req.file)
+    {
+        imageName = req.file.filename
+        //const id = req.params.id
+        const blog = await Blog.findById(id)
+        const oldimageName = blog.image
+        fs.unlink("/storage"+ oldimageName, (err)=>{
+            if(err)
+            {
+                console.log("image not deleted...")
+            }
+            else 
+            {
+                res.status(200).json({
+                    message : "image deleted successfully...."
+                })
+            }
+        })
+    }
+    await Blog.findByIdAndUpdate(id,{
+        title: title,
+        subtitle : subtitle,
+        description : description,
+        image : imageName
+    })
+    res.status(200).json({
+        message : "Blog updated successfully.... "
+    })
+})
+
 
 app.listen(process.env.PORT,()=>{
     console.log("Node.Js project has been started!!!");
 })
+
 
 
     //  console.log(req.body)
