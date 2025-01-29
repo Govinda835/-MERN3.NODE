@@ -31,6 +31,7 @@ app.get("/about",(req,res)=>{
 app.post("/blog",upload.single("image"),async (req,res)=>{
 
     console.log(req.body)
+    console.log(req.file)
     const {title, subtitle, description,} = req.body
     const filename = req.file.filename
     if(!title || !subtitle || !description)
