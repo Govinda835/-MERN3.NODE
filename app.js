@@ -17,13 +17,13 @@ const upload = multer({storage : storage})
 
 app.get("/home",(req,res)=>{
     res.status(200).json({
-        message: "Hello World!!!",
+        message: "Hello World!!!"
     })
 })
 
 app.get("/about",(req,res)=>{
     res.status(200).json({
-        message: "This is about page!!!",
+        message: "This is about page!!!!",
     })
 })
 
