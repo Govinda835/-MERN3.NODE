@@ -96,7 +96,6 @@ app.delete("/blog/:id", async (req,res)=>{
     }
    })
     
-
    await Blog.findByIdAndDelete(id)
    res.status(200).json({
     message : "blog deleted successfully....."
@@ -139,7 +138,7 @@ app.patch("/blog/:id", upload.single("image"), async (req,res)=>{
 
 
 app.listen(process.env.PORT,()=>{
-    console.log("Node.Js project has been started!!!");
+    console.log("Node.Js project has been started!!!.");
 })
 
 

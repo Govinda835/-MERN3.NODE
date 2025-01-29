@@ -7,7 +7,6 @@ const blogSchema = new mongoose.Schema({
     },
     subtitle : {
         type : String,
-
     },
     description : {
         type : String,
